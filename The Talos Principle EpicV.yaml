@@ -1,3 +1,4 @@
+#@ author: cerberos97
 files:
 - epicsetup: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi
 - audio: https://lutris.net/files/tools/directx-2010.tar.gz
