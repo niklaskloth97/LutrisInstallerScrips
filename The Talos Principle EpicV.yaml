@@ -1,0 +1,47 @@
+files:
+- epicsetup: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi
+- audio: https://lutris.net/files/tools/directx-2010.tar.gz
+game:
+  arch: win64
+  args: -opengl -com.epicgames.launcher://apps/Tulip?action=launch&silent=true -SkipBuildPatchPrereq
+  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe
+  prefix: $GAMEDIR
+installer:
+- task:
+    arch: win64
+    install_gecko: false
+    install_mono: false
+    name: create_prefix
+    prefix: $GAMEDIR
+- task:
+    app: arial dotnet48 vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9 win7 
+    arch: win64
+    description: Installing dependencies
+    name: winetricks
+    prefix: $GAMEDIR
+- task:
+    arch: win64
+    key: background
+    name: set_regedit
+    path: HKEY_CURRENT_USER\Control Panel\Colors\
+    prefix: $GAMEDIR
+    type: REG_SZ
+    value: 89 84 85
+- task:
+    arch: win64
+    args: /desktop=EGS,$RESOLUTION msiexec /i "$epicsetup" /q
+    description: Installing Epic Games Store...
+    executable: $GAMEDIR/drive_c/windows/explorer.exe
+    include_processes: explorer.exe
+    name: wineexec
+    prefix: $GAMEDIR
+system:
+  env:
+    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT
+    __GL_SHADER_DISK_CACHE: 1
+    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR
+wine:
+  dxvk: true
+  esync: true
+  overrides:
+    libEGL: n
