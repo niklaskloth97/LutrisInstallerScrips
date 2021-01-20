@@ -1,0 +1,14 @@
+#@author: cerberos97
+#might be a fix for sound-issues
+
+files:
+- audio: https://lutris.net/files/tools/directx-2010.tar.gz
+
+installer:
+- task:
+    arch: win64
+    args: /silent
+    executable: $CACHE/dxsetup/DXSETUP.exe
+    name: wineexec
+    prefix: $GAMEDIR
+
